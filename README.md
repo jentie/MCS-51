@@ -1,2 +1,2 @@
 # MCS-51
-Intel MCS® 51 Microcontroller Family 
+Hardware and Software for Intel MCS® 51 Microcontroller Family 
