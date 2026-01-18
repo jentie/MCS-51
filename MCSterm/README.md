@@ -4,6 +4,8 @@ MCSterm - terminal for MCS BASIC-52 on Intel MCS-51 controller
 
 MCSterm is a terminal program for Windows for communicating with systems running MCS BASIC-52. MCS BASIC-52 is a BASIC interpreter that runs on Intel MCS-51 microcontrollers (8051/8052). It is operated via a serial interface using a terminal.
 
+inital revision v0.1
+
 ### Connection Setup
 
 After starting MCSterm, you may need to press the space bar to trigger the auto-baud detection of BASIC-52. The BASIC interpreter then responds with a version number and the prompt `>`.
