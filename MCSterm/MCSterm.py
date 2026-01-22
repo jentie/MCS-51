@@ -2,6 +2,7 @@
 #   MCSterm - terminal for MCS BASIC-52 on Intel MCS-51 controller
 #
 #   20260118, Jens with Claude OPUS 4.5R
+#   20260122, startup with sending blanks & full line ends for file upload 
 #
 #   MIT License
 #
@@ -11,7 +12,7 @@
 
 ### defaults #####
 
-COMPORT  = 'COM5'
+COMPORT  = 'COM11'
 BAUDRATE = 9600
 
 ##################
@@ -72,7 +73,7 @@ def upload_file(ser, filename):
                     sys.stdout.flush()
             
             # send line end
-            ser.write(b'\r')
+            ser.write(b'\r\n')  # both line end for complete lines           
             
             # wait after line
             time.sleep(0.3)
@@ -259,7 +260,9 @@ def main():
         read_thread = threading.Thread(target=read_from_port, args=(ser,), daemon=True)
         read_thread.start()
 
-        ser.write(b'\x0D')      # force initial BASIC prompt
+        ser.write(b'  ')      # send blank for baud rate detection, start interactive mode
+
+        ser.write(b'\x0D')    # just in case, force initial BASIC prompt
 
         while True:
             if ctrl_c_pressed:
