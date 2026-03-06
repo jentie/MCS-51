@@ -2,6 +2,7 @@
 	8051mtst - test program: check external RAM
 
 	20260128, jens with gemini
+	20260306, corrected volatile and dummy reads added
 
 */
 
@@ -30,8 +31,8 @@ int putchar(int c) {
 
 void main(void) {
     // pointer to external / data memory (XDATA)
-    __xdata unsigned char *ptr;
-    volatile unsigned char val;		// val can change outside program
+    volatile __xdata unsigned char *ptr;
+    unsigned char val;		// val will change outside program
     unsigned char cnt;
     unsigned int addr;
 
@@ -42,13 +43,15 @@ void main(void) {
     addr = 0x0000;
     for (cnt = 0; cnt < 16; cnt++) {
 
-        ptr = (__xdata unsigned char *) addr;
+        ptr = (volatile __xdata unsigned char *) addr;
 
         // step 1: init with 0x00
         *ptr = 0x00;
-        
+        (void)*ptr;     // dummy read
+
         // step 2: write test pattern 0xAA
         *ptr = 0xAA;
+	(void)*ptr;     // dummy read
 
         // step 3: write test pattern 0x55
         *ptr = 0x55;
